@@ -1,0 +1,121 @@
+.question {
+  padding-inline-start: 12px;
+  padding-inline-end: 12px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  background: #e5e7eb;
+  color: #000;
+  border-color: rgba(255, 255, 255, 0.1);
+  border-width: 1px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+
+  .title {
+    display: flex;
+    gap: 8px;
+    height: 2rem;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+  }
+}
+
+.answer {
+  padding-bottom: 16px;
+  margin-top: 24px;
+  margin-inline-start: 16px;
+  margin-inline-end: 16px;
+}
+
+.avatar {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin-right: 8px;
+}
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9999px;
+}
+
+.language-block {
+  .language-title {
+    height: 28px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding-inline-start: 8px;
+    padding-inline-end: 8px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    background: #181818;
+    border-color: rgba(255, 255, 255, 0.1);
+    border-width: 1px;
+
+    .title {
+      color: #fff;
+    }
+
+    .operation {
+    }
+  }
+
+  .codeblock-highlighter-markdown {
+    > div {
+      margin-top: 0px !important;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+  }
+}
+
+#codeblock-highlighter-markdown div::-webkit-scrollbar {
+  display: block !important;
+}
+
+.loading {
+  display: inline-block;
+  border-top: 2px solid currentcolor;
+  border-right: 2px solid currentcolor;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-radius: 99999px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  animation: 0.45s linear 0s infinite normal none running animation-rotate;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  --spinner-size: 0.75rem;
+
+  span {
+    border: 0px;
+    clip: rect(0px, 0px, 0px, 0px);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+  }
+}
+
+@keyframes animation-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIGC Chat</title>
+  </head>
+  <body>
+    <div id="root">
+      <style>
+        body {
+          margin: 0px;
+        }
+        .root-loading {
+          display: flex;
+          width: 100vw;
+          height: 100vh;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          background: rgba(24, 24, 24, 1);
+          color: #fff;
+        }
+        .root-loading-spinner {
+          border-top: 3px solid currentcolor;
+          border-right: 3px solid currentcolor;
+          border-bottom-style: solid;
+          border-left-style: solid;
+          border-radius: 99999px;
+          border-bottom-width: 3px;
+          border-left-width: 3px;
+          border-bottom-color: transparent;
+          border-left-color: transparent;
+          animation: 0.45s linear 0s infinite normal none running animation-rotate;
+          width: var(--spinner-size);
+          height: var(--spinner-size);
+          --spinner-size: 1rem;
+        }
+        .root-loading-text {
+          margin-top: 10px;
+          font-size: 14px;
+        }
+
+        @keyframes animation-rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      </style>
+      <div class="root-loading">
+        <div class="root-loading-spinner"></div>
+        <div class="root-loading-text">资源加载中...</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

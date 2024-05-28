@@ -1,0 +1,20 @@
+#root {
+  /* padding: 3px 0; */
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #e5e7e729;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background: transparent;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}

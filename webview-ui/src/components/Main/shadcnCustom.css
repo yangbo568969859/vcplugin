@@ -1,0 +1,7 @@
+.TabsContent {
+  display: none;
+}
+
+.TabsContent[data-state='active'] {
+  display: block;
+}

@@ -1,0 +1,168 @@
+{
+  "name": "vcplugin",
+  "displayName": "vcplugin",
+  "description": "vcplugin code编码",
+  "version": "1.0.1",
+  "icon": "images/vcplugin.jpg",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./src/extension.js",
+  "publisher": "568969859",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vcplugin.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "vcplugin.askQuestion",
+        "title": "Ask Question"
+      },
+      {
+        "command": "vcplugin.minify",
+        "title": "minify"
+      },
+      {
+        "command": "vcplugin.restore",
+        "title": "restore"
+      },
+      {
+        "command": "vcplugin.openCodeWebview",
+        "title": "Open Code Webview"
+      },
+      {
+        "command": "vcplugin.insert-code-into-chat",
+        "title": "Chat",
+        "category": "VcPlugin",
+        "enablement": "editorHasSelection"
+      },
+      {
+        "command": "vcplugin.find-problem",
+        "title": "Find Problem",
+        "category": "VcPlugin",
+        "enablement": "editorHasSelection"
+      },
+      {
+        "command": "vcplugin.explain",
+        "title": "Explain",
+        "category": "VcPlugin",
+        "enablement": "editorHasSelection"
+      },
+      {
+        "command": "vcplugin.generate-code",
+        "title": "Generate",
+        "category": "VcPlugin"
+      },
+      {
+        "command": "vcplugin.review-code",
+        "title": "Review",
+        "category": "VcPlugin",
+        "enablement": "editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vcplugin.minify",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "vcplugin.restore",
+          "when": "editorHasSelection"
+        },
+        {
+          "submenu": "vcplugin.action",
+          "group": "navigation"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "vcplugin.openCodeWebview",
+          "when": "view == myView",
+          "group": "inline"
+        }
+      ],
+      "vcplugin.action": [
+        {
+          "command": "vcplugin.insert-code-into-chat",
+          "group": "1_chat",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "vcplugin.find-problem",
+          "group": "2_shortcut",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "vcplugin.explain",
+          "group": "2_shortcut",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "vcplugin.generate-code",
+          "group": "3_generate"
+        },
+        {
+          "command": "vcplugin.review-code",
+          "group": "4_review"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "vcplugin.action",
+        "label": "VcPlugin",
+        "group": "navigation"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vcpluginWebview",
+          "title": "vcplugin",
+          "icon": "images/cat.png"
+        }
+      ]
+    },
+    "views": {
+      "vcpluginWebview": [
+        {
+          "type": "webview",
+          "id": "vcplugin.chat-webview",
+          "name": "vcplugin"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js",
+    "start:webview": "cd webview-ui && pnpm run dev",
+    "build:webview": "cd webview-ui && pnpm run build",
+    "esbuild-base": "esbuild ./src/extension.js --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.0.3",
+    "eslint": "^8.6.0",
+    "glob": "^7.2.0",
+    "mocha": "^9.1.3",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "esbuild": "^0.21.3",
+    "moment": "^2.30.1",
+    "uuid": "^9.0.1",
+    "ws": "^8.17.0"
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ count }}</h1>
+    <button @click="increment">Increment</button>
+  </div>
+  <script>
+    const vscode = acquireVsCodeApi();
+    const { createApp, ref } = Vue;
+    createApp({
+      setup() {
+        const count = ref(0);
+        const increment = () => {
+          count.value++;
+          vscode.postMessage({
+            command: 'alert',
+            text: '🐛  on line ' + count.value
+          })
+        };
+        window.addEventListener('message', event => {
+          const message = event.data;
+          switch (message.command) {
+            case 'change':
+              count.value = message.value
+              break;
+          }
+        });
+        return {
+          count,
+          increment
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+
+</html>
