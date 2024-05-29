@@ -14,7 +14,8 @@ import {
   Merge,
   BetweenHorizonalStart,
   Edit,
-  ChevronsDown
+  ChevronsDown,
+  RefreshCcw
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -34,6 +35,7 @@ export const Icons = {
   insert: BetweenHorizonalStart,
   edit: Edit,
   chevronsDown: ChevronsDown,
+  refresh: RefreshCcw,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
