@@ -1,11 +1,12 @@
 import { FC, useState, useRef, ChangeEvent, KeyboardEvent, useEffect } from "react";
-import { AnswerTypes } from '@/types/answer';
+import { AnswerTypes, StreamType } from '@/types/answer';
 import clsx from 'clsx';
 import { useTheme } from 'next-themes';
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Icons } from "@/components/Base/Icons";
+import ButtonIcons from "@/components/Base/ButtonIcons";
 import "./index.css";
 
 import ChildQuestion from "./ChildQuestion";
@@ -13,8 +14,10 @@ import ChildAnswer from "./ChildAnswer";
 import ChildStreaming from "./ChildStreaming";
 import ToggleTheme from "../Action/ThemeToggle";
 import DragResizeCom from "../Action/DragResizeCom";
+import QaTextareaFooter from './QaTextareaFooter'
 
 import GlobalEvent from "@/utils/eventGlobal.js";
+import { getStreamData } from '@/api/eventResource';
 
 import { answerList } from './mock.js';
 
@@ -74,22 +77,33 @@ const QaContent: FC<ParentProps> = (props: ParentProps) => {
       event.preventDefault();
       // 在这里处理Ctrl + Enter事件
       handleSendQuestion(value);
+      const questionStr = value;
       setValue("");
       setIsAnswer(true);
-      const index = Math.floor(Math.random() * answerList.length);
+      // const index = Math.floor(Math.random() * answerList.length);
       // await dealText(answerList[index]);
-      await dealText(answerList[0]);
-
+      // await dealText(answerList[0]);
+      const res: any = await dealText(questionStr);
+      if (res.type === StreamType.ERROR) {
+        setItems((prevItems) => [
+          ...prevItems,
+          {
+            type: "answer",
+            content: '出错了'
+          }
+        ]);
+      } else {
+        setItems((prevItems) => [
+          ...prevItems,
+          {
+            type: "answer",
+            content: streamingContentRef.current,
+          }
+        ]);
+      }
       setIsAnswer(false);
-      console.log(streamingContentRef.current)
-      setItems((prevItems) => [
-        ...prevItems,
-        {
-          type: "answer",
-          content: streamingContentRef.current,
-        }
-      ]);
       setStreamingContent("");
+      toBottom();
     }
   };
 
@@ -103,24 +117,40 @@ const QaContent: FC<ParentProps> = (props: ParentProps) => {
     ]);
   }
 
-  const dealText = (text: string) => {
+  const dealText = async (text: string) => {
     return new Promise((resolve) => {
-      const reverse = text;
-      let index = 0;
-      function repeat () {
-        const num = Math.floor(Math.random() * 10)
-        // lastindex = index;
-        const currentValue = text.substring(index, num + index)
-        index = index + num;
-        setStreamingContent((prevstr) => prevstr + currentValue)
-        if (index < text.length) {
-          setTimeout(repeat, 100)
-        } else {
-          resolve(true)
+      getStreamData({
+        message: text,
+      }, (data: any) => {
+        console.log('getStreamData', data, data.type === StreamType.PROGRESS);
+        if (data.type === StreamType.PROGRESS) {
+          setStreamingContent((prevstr) => prevstr + data.message)
+        } else if (data.type === StreamType.DONE) {
+          resolve(data);
+          return null;
+        } else if (data.type === StreamType.ERROR) {
+          resolve(data);
+          return null;
         }
-      }
-      setTimeout(repeat, 100)
+      });
     })
+    // return new Promise((resolve) => {
+    //   const reverse = text;
+    //   let index = 0;
+    //   function repeat () {
+    //     const num = Math.floor(Math.random() * 10)
+    //     // lastindex = index;
+    //     const currentValue = text.substring(index, num + index)
+    //     index = index + num;
+    //     setStreamingContent((prevstr) => prevstr + currentValue)
+    //     if (index < text.length) {
+    //       setTimeout(repeat, 100)
+    //     } else {
+    //       resolve(true)
+    //     }
+    //   }
+    //   setTimeout(repeat, 100)
+    // })
   }
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -185,13 +215,15 @@ const QaContent: FC<ParentProps> = (props: ParentProps) => {
             <div className="w-7 h-7"></div>
             <div className="w-7 h-7"></div>
             <div className="w-7 h-7">
-              <Button variant="ghost" size="icon">
-                <Icons.chevronsDown
-                  size={20}
-                  className="rotate-0 scale-100 transition-all"
-                  onClick={toBottom}
-                />
-              </Button>
+              <ButtonIcons tips='至底'>
+                <Button variant="ghost" size="icon">
+                  <Icons.chevronsDown
+                    size={20}
+                    className="rotate-0 scale-100 transition-all"
+                    onClick={toBottom}
+                  />
+                </Button>
+              </ButtonIcons>
             </div>
           </div>
         </div>
@@ -216,7 +248,9 @@ const QaContent: FC<ParentProps> = (props: ParentProps) => {
               className="input-text text-sm"
             ></Textarea>
             <div className="input-toolbox mt-2 flex justify-between items-center">
-              <div className="flex gap-1 items-center">左边</div>
+              <div className="flex gap-1 items-center">
+                <QaTextareaFooter />
+              </div>
               <div className="flex items-center">
                 <div>
                   <ToggleTheme />

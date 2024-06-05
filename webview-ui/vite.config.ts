@@ -6,6 +6,13 @@ import path from 'path'
 export default defineConfig({
   server: {
     host: true,
+    proxy: {
+      '/proxy': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/proxy/, '')
+      }, // 代理地址
+    }
   },
   plugins: [react()],
   resolve: {

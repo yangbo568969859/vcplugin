@@ -6,6 +6,7 @@ const fs = require('fs');
 const { getHtmlForWebview } = require('./webview')
 const { FindProblem } = require('./editorMenu')
 const { ChatViewProvider } = require('./chatViewProvider')
+const { CompletionItemProvider } = require('./CompletionItemProvider')
 
 
 const getWebViewContent = (pagePath, basePath, url) => {
@@ -22,6 +23,7 @@ const getWebViewContent = (pagePath, basePath, url) => {
 function activate(context) {
   console.log('Congratulations, your extension "vcplugin" is now active!');
   const chatViewProvider = new ChatViewProvider(context); //注册webview实例
+  const completionItemprovider = new CompletionItemProvider(); // 注册补全项实例
 
   let disposable = vscode.commands.registerCommand('vcplugin.helloWorld', function () {
     const dateMsg = new Date().toLocaleString();
@@ -95,6 +97,15 @@ function activate(context) {
       }
     }
   ))
+  const inlineProvider = {
+    provideInlineCompletionItems(document, position, context, token) {
+      // 在这里实现你的内联补全逻辑
+      // 返回一个 InlineCompletionList 或 null
+      return [];
+    }
+  }
+  context.subscriptions.push(vscode.languages.registerCompletionItemProvider('*', completionItemprovider))
+  context.subscriptions.push(vscode.languages.registerInlineCompletionItemProvider('*', completionItemprovider))
 }
 
 // this method is called when your extension is deactivated

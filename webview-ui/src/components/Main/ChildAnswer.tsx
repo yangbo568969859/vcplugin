@@ -21,7 +21,6 @@ const ChildAnswer = memo<ParentProps>(function ChildAnswer(props: ParentProps) {
           <div>CodeCoplit</div>
         </div>
         <div className='operation flex items-center'>
-          {/* <ButtonIcons tips='删除' /> */}
           <Button
             variant="ghost"
             size="icon"
@@ -35,7 +34,7 @@ const ChildAnswer = memo<ParentProps>(function ChildAnswer(props: ParentProps) {
           </Button>
         </div>
       </div>
-      <div className='main mx-0 px-0'>
+      <div className='main mx-0 px-0 mt-2'>
         <MarkdownContent content={content} />
       </div>
     </div>

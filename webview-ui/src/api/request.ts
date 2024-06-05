@@ -1,10 +1,11 @@
 import axios from 'axios';
+import { baseURL } from './const'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: '/proxy',
   timeout: 1000,
   headers: {
-
+    'Content-Type': 'application/json;',
   }
 })
 

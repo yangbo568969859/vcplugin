@@ -1,17 +1,18 @@
 import { request } from './request';
 
-export function getStreamData(query: any) {
+export function getStreamData(data: any) {
   return request({
-    url: '/text_chat_stream/CodeChat.prompt_custom',
+    url: '/gpt/gpt/text_chat_stream/CodeChat.prompt_custom',
     method: 'post',
-    params: query
+    timeout: 0,
+    data
   })
 }
 
-export function getMappers () {
+export function getMappers (params: any) {
   return request({
-    url: 'proxy/code_manager/user_config/mappers',
+    url: '/code_manager/user_config/mappers',
     method: 'get',
-    
+    params
   })
 }

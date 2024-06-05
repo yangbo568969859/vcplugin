@@ -15,6 +15,7 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'no-unused-vars': [1, { 'args': 'after-used', 'argsIgnorePattern': '^_' }],
+    'no-inner-declarations': 0,
     '@typescript-eslint/no-unused-vars': [1, { 'args': 'after-used', 'argsIgnorePattern': '^_' }],
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-comment': 0,

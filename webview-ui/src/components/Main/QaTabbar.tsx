@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Icons } from '@/components/Base/Icons';
 import { Button } from '@/components/ui/button';
+import ButtonIcons from '@/components/Base/ButtonIcons';
 import QaChat from './QaChat';
 import QaReview from './QaReview';
 import './shadcnCustom.css';
@@ -22,12 +23,14 @@ const QaTabbar: FC = () => {
           <TabsTrigger value="help">Help</TabsTrigger>
         </TabsList>
         <div className='w-10 h-10 flex items-center justify-center mx-2'>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={refreshPage}>
-            <Icons.refresh size={16} className="rotate-0 scale-100 transition-all" />
-          </Button>
+          <ButtonIcons tips='刷新' >
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={refreshPage}>
+              <Icons.refresh size={16} className="rotate-0 scale-100 transition-all" />
+            </Button>
+          </ButtonIcons>
         </div>
       </div>
       <TabsContent className='TabsContent' value="chat" forceMount>

@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button'
-import { Icons } from '@/components/Base/Icons'
 import {
   Tooltip,
   TooltipContent,
@@ -7,35 +5,28 @@ import {
   TooltipTrigger,
   TooltipArrow
 } from "@/components/ui/tooltip"
+import React from 'react';
 
 interface ButtonIconsProps {
+  tips?: string,
   size?: number,
-  tips?: string
+  showArrow?: boolean,
+  children: React.ReactNode,
 }
 
 export default function ButtonIcons (props: ButtonIconsProps) {
-  const { size = 18, tips = '' } = props;
+  const { tips = '', showArrow = false, children } = props;
   return (
-    tips ? 
     <TooltipProvider delayDuration={100}>
       <Tooltip>
         <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon">
-            <Icons.copy size={size} className="rotate-0 scale-100 transition-all" />
-          </Button>
+          { children }
         </TooltipTrigger>
         <TooltipContent>
-          <p>{tips}</p>
+          <p className="text-xs">{tips}</p>
+          { showArrow ? <TooltipArrow /> : null }
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-    : 
-    <Button
-      variant="ghost"
-      size="icon">
-      <Icons.copy size={size} className="rotate-0 scale-100 transition-all" />
-    </Button>
   )
 }

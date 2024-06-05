@@ -3,3 +3,10 @@ export type ParentProps = {
 }
 
 export type AnswerTypes = "question" | "answer"
+
+export enum StreamType {
+  SUCCSEE,
+  ERROR,
+  DONE,
+  PROGRESS
+}
