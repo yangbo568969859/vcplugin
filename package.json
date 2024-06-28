@@ -16,6 +16,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "vcplugin.toggle-comment",
+        "title": "Toggle Comment"
+      },
+      {
         "command": "vcplugin.helloWorld",
         "title": "Hello World"
       },
@@ -137,7 +141,14 @@
           "name": "vcplugin"
         }
       ]
-    }
+    },
+    "keybindings": [
+      {
+        "command": "vcplugin.toggle-comment",
+        "key": "ctrl+shift+h",
+        "mac": "cmd+shift+h"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",

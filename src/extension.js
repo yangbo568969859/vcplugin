@@ -106,6 +106,30 @@ function activate(context) {
   }
   context.subscriptions.push(vscode.languages.registerCompletionItemProvider('*', completionItemprovider))
   context.subscriptions.push(vscode.languages.registerInlineCompletionItemProvider('*', completionItemprovider))
+
+
+  // 注册一个快捷键
+  let keybindingDisposable = vscode.commands.registerCommand('vcplugin.toggle-comment', () => {
+    let editor = vscode.window.activeTextEditor;
+    if (editor) {
+      let document = editor.document;
+      let selection = editor.selection;
+
+      // 获取选中的文本
+      let text = document.getText(selection);
+
+      // 根据选中的文本是否已经被注释来切换注释
+      let isCommented = text.startsWith('//');
+      let newText = isCommented ? text.replace(/^\/\//mg, '') : text.replace(/^/mg, '//');
+
+      // 替换选中的文本
+      editor.edit(editBuilder => {
+        editBuilder.replace(selection, newText);
+      });
+    }
+  })
+  // 将快捷键添加到订阅列表中
+  context.subscriptions.push(keybindingDisposable);
 }
 
 // this method is called when your extension is deactivated
